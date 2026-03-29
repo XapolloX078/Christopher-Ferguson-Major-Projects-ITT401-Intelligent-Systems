@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MediAssist AI — Intelligent Medical Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0A0F1E;
+    --bg2: #111827;
+    --surface: #1A2235;
+    --ink: #F0EEF8;
+    --ink-muted: rgba(240, 238, 248, 0.58);
+    --red: #F87171;
+    --red-soft: rgba(248, 113, 113, 0.14);
+    --teal: #00D4AA;
+    --violet: #7C6FF7;
+    --teal-soft: rgba(0, 212, 170, 0.12);
+    --gold: #C4B5FD;
+    --white: #FFFFFF;
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+    --radius: 20px;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --brand-grad: linear-gradient(135deg, #00D4AA, #7C6FF7);
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s var(--ease);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid transparent;
+  }
+  nav.nav-scrolled {
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo .pulse {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.45); }
+    50% { box-shadow: 0 0 0 10px rgba(0, 212, 170, 0); }
+  }
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px 22px;
+    max-width: min(720px, 58vw);
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-muted);
+    font-size: 0.82rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: #00D4AA; }
+  .nav-cta {
+    position: relative;
+    display: inline-block;
+    padding: 10px 26px;
+    border-radius: 999px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+    background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--brand-grad) border-box;
+    border: 2px solid transparent;
+    overflow: hidden;
+  }
+  .nav-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  .nav-cta:hover {
+    color: var(--white);
+    background: linear-gradient(rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.95)) padding-box, var(--brand-grad) border-box;
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.15);
+  }
+  .nav-cta:hover::after { transform: translateX(120%); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    gap: 64px;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg);
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 35%, rgba(0, 212, 170, 0.22), transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 25%, rgba(124, 111, 247, 0.2), transparent 50%),
+      radial-gradient(ellipse 50% 70% at 50% 95%, rgba(0, 212, 170, 0.1), transparent 45%),
+      radial-gradient(ellipse 40% 40% at 70% 70%, rgba(124, 111, 247, 0.12), transparent 50%);
+    animation: heroMesh 22s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  }
+  @keyframes heroMesh {
+    0% { opacity: 0.75; transform: scale(1) translate(0, 0); }
+    100% { opacity: 1; transform: scale(1.06) translate(2%, -1.5%); }
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0, 212, 170, 0.1);
+    border: 1px solid rgba(0, 212, 170, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--teal);
+    padding: 8px 18px; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 600;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.76rem, 4.6vw, 4.37rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: var(--brand-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem; color: var(--ink-muted); line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    background: var(--brand-grad);
+    color: var(--white);
+    padding: 14px 32px; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0, 212, 170, 0.25);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 32px rgba(0, 212, 170, 0.25), 0 12px 40px rgba(124, 111, 247, 0.15);
+  }
+  .btn-primary:hover::after { transform: translateX(100%); }
+  .btn-secondary {
+    position: relative;
+    overflow: hidden;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--ink);
+    padding: 14px 32px; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+  }
+  .btn-secondary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(0, 212, 170, 0.4);
+    color: var(--teal);
+    transform: translateY(-6px);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.1);
+  }
+  .btn-secondary:hover::after { transform: translateX(100%); }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat { text-align: left; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.3rem;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #00D4AA, #7C6FF7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--ink-muted); margin-top: 2px; }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    animation: fadeIn 0.8s 0.2s ease both;
+    position: relative;
+  }
+  .chat-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .chat-card:hover {
+    border-color: rgba(0, 212, 170, 0.35);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.1), var(--shadow);
+    transform: translateY(-6px);
+  }
+  .chat-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .chat-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--brand-grad);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .chat-info strong { display: block; font-size: 0.9rem; color: var(--ink); }
+  .chat-info span { font-size: 0.75rem; color: var(--teal); font-weight: 500; }
+  .chat-msg {
+    padding: 12px 16px; border-radius: 14px;
+    font-size: 0.875rem; line-height: 1.5;
+    margin-bottom: 12px;
+    animation: msgPop 0.4s ease both;
+  }
+  .chat-msg.user {
+    background: var(--brand-grad);
+    color: var(--white);
+    border-radius: 14px 14px 4px 14px;
+    margin-left: 32px;
+  }
+  .chat-msg.ai {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px 14px 14px 4px;
+    margin-right: 32px;
+    position: relative;
+    color: var(--ink);
+  }
+  .chat-msg.ai::before {
+    content: '🩺';
+    position: absolute; left: -8px; bottom: -4px;
+    font-size: 1rem;
+  }
+  .typing-indicator {
+    display: flex; gap: 4px; padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px 14px 14px 4px;
+    width: fit-content; margin-right: 32px;
+  }
+  .dot {
+    width: 6px; height: 6px; background: var(--ink-muted);
+    border-radius: 50%;
+    animation: typing 1.2s infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+  @keyframes msgPop { from { opacity: 0; transform: scale(0.95) translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .disclaimer-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #FCA5A5;
+    padding: 8px 14px; border-radius: 10px;
+    font-size: 0.75rem; font-weight: 500;
+    margin-top: 16px;
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* FEATURES */
+  .section { padding: 100px 48px; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.3rem, 3.45vw, 3.22rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    color: var(--ink-muted); max-width: 520px;
+    font-size: 1rem; line-height: 1.7;
+  }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .feature-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 32px;
+    border: 1px solid var(--glass-border);
+    cursor: default;
+  }
+  .feature-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 212, 170, 0.4);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.1);
+  }
+  .feature-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+  }
+  .feature-card:nth-child(1) .feature-icon { background: linear-gradient(135deg, rgba(0, 212, 170, 0.35), rgba(124, 111, 247, 0.2)); }
+  .feature-card:nth-child(2) .feature-icon { background: linear-gradient(135deg, rgba(124, 111, 247, 0.35), rgba(0, 212, 170, 0.15)); }
+  .feature-card:nth-child(3) .feature-icon { background: linear-gradient(135deg, rgba(0, 212, 170, 0.25), rgba(196, 181, 253, 0.25)); }
+  .feature-card:nth-child(4) .feature-icon { background: linear-gradient(135deg, rgba(196, 181, 253, 0.3), rgba(0, 212, 170, 0.2)); }
+  .feature-card:nth-child(5) .feature-icon { background: linear-gradient(135deg, rgba(0, 212, 170, 0.2), rgba(124, 111, 247, 0.35)); }
+  .feature-card:nth-child(6) .feature-icon { background: linear-gradient(135deg, rgba(124, 111, 247, 0.22), rgba(0, 212, 170, 0.28)); }
+  .feature-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; color: var(--ink); }
+  .feature-card p { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: linear-gradient(180deg, #070B14 0%, #0A0F1E 100%);
+    color: var(--white);
+  }
+  .how-section .section-label { color: var(--teal); }
+  .how-section .section-title { color: var(--ink); }
+  .how-section .section-desc { color: var(--ink-muted); }
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 32px; margin-top: 60px;
+  }
+  .step { text-align: center; }
+  .step-num {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(0, 212, 170, 0.25);
+    box-shadow:
+      0 0 0 1px rgba(0, 212, 170, 0.3),
+      0 0 20px rgba(0, 212, 170, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0 auto 20px;
+    position: relative; z-index: 1;
+  }
+  .step:hover .step-num {
+    background: rgba(0, 212, 170, 0.15);
+    border-color: rgba(0, 212, 170, 0.5);
+    box-shadow:
+      0 0 0 1px rgba(0, 212, 170, 0.45),
+      0 0 28px rgba(0, 212, 170, 0.25);
+    transform: scale(1.08);
+  }
+  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
+  .step p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* CHAT DEMO */
+  .demo-section { background: var(--bg2); }
+  .demo-container {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    gap: 64px; align-items: start; margin-top: 60px;
+  }
+  .demo-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.84rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .demo-info p { color: var(--ink-muted); line-height: 1.7; margin-bottom: 24px; }
+  .topic-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .topic-chip {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 500; cursor: pointer;
+    color: var(--ink);
+  }
+  .topic-chip:hover {
+    border-color: rgba(0, 212, 170, 0.4);
+    background: rgba(0, 212, 170, 0.12);
+    color: var(--teal);
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.12);
+  }
+
+  /* MAIN CHAT INTERFACE */
+  .chat-interface {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    height: 540px;
+  }
+  .chat-interface:hover {
+    border-color: rgba(0, 212, 170, 0.25);
+    box-shadow: 0 0 28px rgba(0, 212, 170, 0.08), var(--shadow);
+  }
+  .chat-top-bar {
+    background: linear-gradient(90deg, #00D4AA, #7C6FF7);
+    color: var(--white);
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .status-dot { width: 8px; height: 8px; background: #4ECB71; border-radius: 50%; animation: pulse 2s infinite; }
+  .chat-top-bar strong { font-size: 0.9rem; flex: 1; }
+  .chat-top-bar span { font-size: 0.75rem; color: rgba(255, 255, 255, 0.85); }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 20px;
+    background: rgba(10, 15, 30, 0.35);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 2px; }
+  .msg {
+    max-width: 80%;
+    padding: 10px 16px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    animation: msgPop 0.3s ease;
+  }
+  .msg.user {
+    background: var(--brand-grad);
+    color: var(--white);
+    align-self: flex-end;
+    border-radius: 16px 16px 4px 16px;
+    box-shadow: 0 4px 20px rgba(0, 212, 170, 0.2);
+  }
+  .msg.bot {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--ink);
+    align-self: flex-start;
+    border-radius: 16px 16px 16px 4px;
+    border: 1px solid var(--glass-border);
+  }
+  .msg.bot strong { display: block; color: var(--teal); font-size: 0.75rem; margin-bottom: 4px; }
+  .msg.error {
+    background: rgba(248, 113, 113, 0.12);
+    color: #FCA5A5;
+    align-self: flex-start;
+    border-radius: 16px 16px 16px 4px;
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    font-size: 0.82rem;
+  }
+  .msg.error strong { display: block; color: var(--red); font-size: 0.75rem; margin-bottom: 4px; }
+  .chat-input-row {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(10, 15, 30, 0.5);
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+  #chat-input {
+    flex: 1;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px; padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem; resize: none;
+    outline: none; min-height: 44px; max-height: 120px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  #chat-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.2);
+  }
+  #send-btn {
+    width: 48px; height: 44px; border-radius: 999px;
+    background: var(--brand-grad);
+    color: var(--white);
+    border: none; cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #send-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+  #send-btn:hover { transform: scale(1.06); box-shadow: 0 0 20px rgba(0, 212, 170, 0.35); }
+  #send-btn:hover::after { transform: translateX(100%); }
+  #send-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--ink-muted);
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+  }
+  #send-btn:disabled::after { display: none; }
+
+  /* CONNECTION STATUS BANNER */
+  .conn-banner {
+    display: none;
+    align-items: center; gap: 10px;
+    padding: 10px 20px;
+    background: rgba(240, 193, 89, 0.12);
+    color: #FCD34D;
+    font-size: 0.8rem; font-weight: 500;
+    border-bottom: 1px solid rgba(240, 193, 89, 0.25);
+  }
+  .conn-banner.show { display: flex; }
+  .conn-banner.error {
+    background: rgba(248, 113, 113, 0.12);
+    color: #FCA5A5;
+    border-bottom-color: rgba(248, 113, 113, 0.25);
+  }
+
+  /* CONFIG PANEL — hidden on the live site; inputs stay in DOM for getConfig() */
+  .config-panel {
+    display: none;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 20px; margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+  }
+  .config-panel h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 14px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .config-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .config-row label { font-size: 0.8rem; width: 110px; flex-shrink: 0; color: var(--ink-muted); font-weight: 500; }
+  .config-row input {
+    flex: 1; border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px; padding: 7px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; outline: none;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .config-row input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.2);
+  }
+  .config-toggle {
+    font-size: 0.78rem; color: var(--teal); cursor: pointer;
+    text-decoration: underline; margin-bottom: 12px; display: inline-block;
+  }
+
+  /* ETHICS */
+  .ethics-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px; margin-top: 60px;
+  }
+  .ethics-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex; gap: 20px; align-items: flex-start;
+    border: 1px solid var(--glass-border);
+  }
+  .ethics-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 212, 170, 0.4);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.1);
+  }
+  .ethics-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.25), rgba(124, 111, 247, 0.2));
+    font-size: 1.35rem;
+  }
+  .ethics-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--ink); }
+  .ethics-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--ink-muted);
+    padding: 60px 48px;
+  }
+  .footer-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
+  }
+  footer .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-align: center;
+    margin: 0;
+  }
+  .footer-row--links {
+    text-align: center;
+  }
+  .footer-section-label {
+    margin: 0 0 16px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #00D4AA;
+  }
+  .footer-link-row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 28px;
+  }
+  .footer-link-row a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .footer-link-row a:hover { color: #00D4AA; }
+  .footer-row--notices {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .footer-box-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .footer-disclaimer-box {
+    background: rgba(192, 57, 43, 0.1);
+    border: 1px solid rgba(192, 57, 43, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .footer-disclaimer-box p { margin: 0; }
+  .footer-emergency-box {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .footer-emergency-box p { margin: 0; }
+  .footer-emergency-box .footer-box-label { color: #FBBF24; }
+  .footer-disclaimer-box .footer-box-label { color: #FCA5A5; }
+  .footer-row--bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    padding-top: 4px;
+  }
+  .footer-meta {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .footer-copyright {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .demo-container, .ethics-grid { grid-template-columns: 1fr; }
+    .section { padding: 70px 24px; }
+    footer { padding: 60px 24px; }
+    .nav-links { max-width: none; justify-content: center; }
+  }
+
+  /* ANIMATIONS */
+  .dot-anim { font-style: italic; opacity: 0.7; color: var(--teal); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="pulse"></div>
+    MediAssist <span style="color:var(--teal)">AI</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#demo">Try It</a>
+    <a href="#ethics">Ethics</a>
+    <a href="#how">How It Works</a>
+    <a href="#">About</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact Support</a>
+  </div>
+  <a href="#demo" class="nav-cta">Start Chat →</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-badge">🏥 Powered by AnythingLLM + LM Studio</div>
+    <h1 class="hero-title">Your <em>Intelligent</em> Medical Companion</h1>
+    <p class="hero-subtitle">MediAssist AI is a domain-specific conversational assistant trained to answer general medical questions, check symptoms, explain conditions, and guide users toward appropriate care — responsibly.</p>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">Try the Assistant</a>
+      <a href="#features" class="btn-secondary">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Medical Topics</div></div>
+      <div class="stat"><div class="stat-num">RAG</div><div class="stat-label">Document Retrieval</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Local &amp; Private</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="chat-card">
+      <div class="chat-header">
+        <div class="chat-avatar">🩺</div>
+        <div class="chat-info">
+          <strong>MediAssist AI</strong>
+          <span>● Online — Powered by LM Studio</span>
+        </div>
+      </div>
+      <div class="chat-msg user">I've had a persistent headache for 3 days. Should I be concerned?</div>
+      <div class="chat-msg ai">A 3-day headache can have several causes. Common ones include tension, dehydration, or sinus pressure. However, persistent headaches lasting more than 2–3 days warrant medical attention, especially if accompanied by fever, stiff neck, or vision changes. I'd recommend seeing a doctor today to rule out any serious causes.</div>
+      <div class="typing-indicator">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="disclaimer-chip">⚠️ Not a substitute for professional medical advice</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-label">Capabilities</div>
+  <h2 class="section-title">Built for Medical Intelligence</h2>
+  <p class="section-desc">A custom GPT fine-tuned on medical data using AnythingLLM's RAG pipeline, providing contextually accurate and responsible health information.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Symptom Analysis</h3>
+      <p>Describe your symptoms and receive structured, evidence-based information about possible conditions and next steps.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💊</div>
+      <h3>Medication Information</h3>
+      <p>Ask about drug names, uses, dosages, and common interactions drawn from curated medical reference documents.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h3>RAG Document Retrieval</h3>
+      <p>Powered by AnythingLLM's retrieval-augmented generation, pulling precise answers from uploaded medical literature.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🫀</div>
+      <h3>Condition Explainer</h3>
+      <p>Understand diagnoses in plain language — from hypertension to diabetes — with clear explanations patients can act on.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Fully Local &amp; Private</h3>
+      <p>Runs entirely on your machine via LM Studio. No patient data ever leaves your system, ensuring full HIPAA-aware privacy.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Context-Aware Conversation</h3>
+      <p>Maintains multi-turn conversation history so the assistant remembers what you said earlier in the consultation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section how-section" id="how">
+  <div class="section-label">Process</div>
+  <h2 class="section-title">How MediAssist AI Works</h2>
+  <p class="section-desc">A clean four-stage pipeline from user query to medically grounded response.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>User Query</h3>
+      <p>The user types a medical question or describes symptoms in natural language through the chat interface.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>RAG Retrieval</h3>
+      <p>AnythingLLM embeds the query and retrieves the most relevant chunks from the medical document knowledge base.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>LLM Processing</h3>
+      <p>The retrieved context + question is passed to the local LM Studio model (Mistral-7B or Llama-3.1) for response generation.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Safe Response</h3>
+      <p>The answer is returned with appropriate disclaimers, source citations, and guidance to seek professional care when warranted.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section demo-section" id="demo">
+  <div class="section-label">Interactive Demo</div>
+  <h2 class="section-title">Ask MediAssist AI</h2>
+  <p class="section-desc">Powered by local AI. This connects to your local AnythingLLM + LM Studio instance running on your machine.</p>
+  <div class="demo-container">
+    <div class="demo-info">
+
+      <!-- ── CONFIGURATION PANEL ── -->
+      <div class="config-panel">
+        <h4>⚙️ Connection Settings</h4>
+        <span class="config-toggle" id="config-toggle" onclick="toggleConfig()">▼ Show / Edit Settings</span>
+        <div id="config-fields" style="display:none">
+          <div class="config-row">
+            <label>Server URL</label>
+            <input type="text" id="cfg-url" value="http://localhost:3001" placeholder="http://localhost:3001"/>
+          </div>
+          <div class="config-row">
+            <label>Workspace Slug</label>
+            <input type="text" id="cfg-slug" value="medical" placeholder="medical"/>
+          </div>
+          <div class="config-row">
+            <label>API Key</label>
+            <input type="password" id="cfg-key" value="K4Z33N9-TM04WWJ-JRWGYV0-D6HYZFH" placeholder="Your API key"/>
+          </div>
+          <div style="margin-top:10px;font-size:0.75rem;color:var(--ink-muted);line-height:1.6;">
+            💡 <strong>Tip:</strong> Make sure Docker is running, LM Studio local server is active on port 1234, and AnythingLLM is running on port 3001. Serve this file via <code style="background:var(--bg2);padding:1px 5px;border-radius:4px;">python -m http.server 8080</code> to avoid browser CORS restrictions.
+          </div>
+        </div>
+      </div>
+
+      <h3>Try these example questions:</h3>
+      <p>Click any topic below to pre-fill the chat, or type your own medical question. Remember — this is for general information only.</p>
+      <div class="topic-chips">
+        <div class="topic-chip" onclick="fillChat('What are the symptoms of Type 2 diabetes?')">Type 2 Diabetes</div>
+        <div class="topic-chip" onclick="fillChat('What should I do if I have a fever of 39°C?')">High Fever</div>
+        <div class="topic-chip" onclick="fillChat('What causes high blood pressure?')">Hypertension</div>
+        <div class="topic-chip" onclick="fillChat('How do I recognize signs of a heart attack?')">Heart Attack Signs</div>
+        <div class="topic-chip" onclick="fillChat('What are common side effects of Ibuprofen?')">Ibuprofen Side Effects</div>
+        <div class="topic-chip" onclick="fillChat('What is the difference between a cold and the flu?')">Cold vs Flu</div>
+        <div class="topic-chip" onclick="fillChat('How can I improve my sleep quality?')">Sleep Health</div>
+        <div class="topic-chip" onclick="fillChat('What are warning signs of a stroke?')">Stroke Warning Signs</div>
+      </div>
+      <div style="margin-top:28px;padding:16px;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.22);border-radius:20px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+        <p style="font-size:0.8rem;color:#FCA5A5;font-weight:500;line-height:1.6;">
+          ⚠️ <strong>Medical Disclaimer:</strong> MediAssist AI provides general health information only. It is not a licensed medical professional. Always consult a qualified healthcare provider for diagnosis, treatment, or medical advice.
+        </p>
+      </div>
+    </div>
+
+    <div class="chat-interface">
+      <div class="chat-top-bar">
+        <div class="status-dot" id="status-dot"></div>
+        <strong>MediAssist AI</strong>
+        <span id="conn-status-text">General Medical Q&amp;A</span>
+      </div>
+      <!-- Connection warning banner -->
+      <div class="conn-banner" id="conn-banner">
+        <span id="conn-banner-msg"></span>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="msg bot"><strong>MediAssist AI</strong>Hello! I'm MediAssist AI — your intelligent medical information assistant. I can help answer general health questions, explain symptoms, and provide information about common conditions. How can I help you today?<br><br><em style="font-size:0.75rem;color:var(--ink-muted)">Note: I provide information only — always consult a doctor for medical decisions.</em></div>
+      </div>
+      <div class="chat-input-row">
+        <textarea id="chat-input" placeholder="Ask a medical question..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button id="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ethics">
+  <div class="section-label">Responsible AI</div>
+  <h2 class="section-title">Built with Ethics at the Core</h2>
+  <p class="section-desc">Medical AI carries unique responsibilities. MediAssist AI was designed with safeguards across every layer of the system.</p>
+  <div class="ethics-grid">
+    <div class="ethics-card">
+      <div class="ethics-icon">⚖️</div>
+      <div>
+        <h3>Bias Mitigation</h3>
+        <p>Training data was curated from diverse, peer-reviewed sources to reduce demographic and diagnostic bias. The model is regularly evaluated against known medical bias benchmarks.</p>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-icon">🔒</div>
+      <div>
+        <h3>Privacy by Design</h3>
+        <p>Running entirely locally via LM Studio, no patient data is transmitted externally. All conversations are processed on-device, ensuring HIPAA-aware data handling.</p>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-icon">🎯</div>
+      <div>
+        <h3>Scope Boundaries</h3>
+        <p>The system is explicitly designed to recognize the limits of AI medical advice, always redirecting users to qualified professionals for diagnoses, prescriptions, or emergencies.</p>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-icon">📋</div>
+      <div>
+        <h3>Source Transparency</h3>
+        <p>Responses cite the specific document chunks retrieved by the RAG system, so users can trace information back to its source and make informed judgments about reliability.</p>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-icon">🚨</div>
+      <div>
+        <h3>Emergency Detection</h3>
+        <p>The model is tuned to recognize emergency symptoms (chest pain, stroke signs, severe allergic reactions) and immediately directs users to call emergency services.</p>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-icon">📊</div>
+      <div>
+        <h3>Continuous Evaluation</h3>
+        <p>Performance is tracked against accuracy, hallucination rate, and user feedback metrics. The knowledge base is updated with current guidelines as they are released.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MediAssist AI</div>
+
+    <div class="footer-row footer-row--notices">
+      <div class="footer-disclaimer-box">
+        <strong class="footer-box-label">Disclaimer</strong>
+        <p>MediAssist AI provides general health information and is not a substitute for professional medical advice, diagnosis, or treatment.</p>
+      </div>
+      <div class="footer-emergency-box">
+        <strong class="footer-box-label">Emergency</strong>
+        <p>If you believe you are experiencing a medical emergency, please contact emergency services.</p>
+      </div>
+    </div>
+
+    <div class="footer-row footer-row--bottom">
+      <p class="footer-meta">Powered by AI | MediAssist AI v1.0</p>
+      <p class="footer-copyright">© 2026 MediAssist AI. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CONFIGURATION ──────────────────────────────────────────────────────────
+// Default values — can be changed live via the Settings panel in the UI.
+// To run this file without CORS errors, serve it with:
+//   python -m http.server 8080   (then open http://localhost:8080)
+// ───────────────────────────────────────────────────────────────────────────
+function getConfig() {
+  return {
+    url:   (document.getElementById('cfg-url')  || {}).value  || 'http://localhost:3001',
+    slug:  (document.getElementById('cfg-slug') || {}).value  || 'Medical',
+    key:   (document.getElementById('cfg-key')  || {}).value  || ''
+  };
+}
+
+// Toggle the config panel
+function toggleConfig() {
+  const fields  = document.getElementById('config-fields');
+  const toggle  = document.getElementById('config-toggle');
+  const visible = fields.style.display !== 'none';
+  fields.style.display  = visible ? 'none' : 'block';
+  toggle.textContent    = visible ? '▼ Show / Edit Settings' : '▲ Hide Settings';
+}
+
+// ── CONNECTION STATUS ───────────────────────────────────────────────────────
+function setStatus(state) {
+  // state: 'ok' | 'error' | 'connecting'
+  const dot    = document.getElementById('status-dot');
+  const text   = document.getElementById('conn-status-text');
+  const banner = document.getElementById('conn-banner');
+  const banMsg = document.getElementById('conn-banner-msg');
+
+  if (state === 'ok') {
+    dot.style.background = '#4ECB71';
+    text.textContent     = 'Connected · General Medical Q&A';
+    banner.className     = 'conn-banner';                 // hidden
+  } else if (state === 'connecting') {
+    dot.style.background = '#F0A500';
+    text.textContent     = 'Connecting…';
+    banner.className     = 'conn-banner show';
+    banMsg.textContent   = '⏳ Waiting for AnythingLLM response…';
+  } else {
+    dot.style.background = '#E74C3C';
+    text.textContent     = 'Disconnected';
+    banner.className     = 'conn-banner show error';
+    banMsg.textContent   = '⚠️ Cannot reach AnythingLLM. Check Docker & LM Studio, then update the Server URL above if needed.';
+  }
+}
+
+// ── CHAT LOGIC ──────────────────────────────────────────────────────────────
+const messagesHistory = [];
+
+async function sendMessage() {
+  const input   = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const text    = input.value.trim();
+  if (!text) return;
+
+  // 1. Show user message
+  addMsg(text, 'user');
+  input.value = '';
+  autoResize(input);
+  sendBtn.disabled = true;
+  messagesHistory.push({ role: 'user', content: text });
+
+  // 2. Thinking indicator
+  const thinkingEl = addMsg('', 'bot', true);
+  setStatus('connecting');
+
+  const { url, slug, key } = getConfig();
+
+  // 3. Validate config before calling
+  if (!key) {
+    thinkingEl.remove();
+    addErrorMsg('No API key set. Edit the API key in this HTML file (input id="cfg-key") or show the panel again by removing display:none from .config-panel.');
+    setStatus('error');
+    sendBtn.disabled = false;
+    return;
+  }
+
+  try {
+    // 4. API call to AnythingLLM
+    const response = await fetch(`${url}/api/v1/workspace/${encodeURIComponent(slug)}/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${key}`
+      },
+      body: JSON.stringify({ message: text, mode: 'chat' })
+    });
+
+    // 5. Handle HTTP errors
+    if (response.status === 403) {
+      throw new Error('403 — Invalid API key. Check your key in the Settings panel.');
+    }
+    if (response.status === 404) {
+      throw new Error(`404 — Workspace "${slug}" not found. Check the workspace slug in Settings.`);
+    }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} — Unexpected error from AnythingLLM.`);
+    }
+
+    const data  = await response.json();
+    const reply = data.textResponse || "Sorry, I couldn't get a response. Please try again.";
+
+    thinkingEl.remove();
+    addMsg(reply, 'bot');
+    messagesHistory.push({ role: 'assistant', content: reply });
+    setStatus('ok');
+
+  } catch (e) {
+    console.error('MediAssist connection error:', e);
+    thinkingEl.remove();
+
+    // Friendly, actionable error messages
+    let hint = e.message || '';
+    if (hint.includes('Failed to fetch') || hint.includes('NetworkError') || hint.includes('net::')) {
+      hint = `Cannot reach AnythingLLM at ${url}. Please check:\n• Docker Desktop is running\n• The AnythingLLM container is up (port 3001)\n• LM Studio local server is active (port 1234)\n• You are serving this file via http:// (not file://)\n\nIf the URL is different, update it in ⚙️ Connection Settings above.`;
+    }
+    addErrorMsg(hint || 'Connection failed. See ⚙️ Connection Settings for help.');
+    setStatus('error');
+  } finally {
+    sendBtn.disabled = false;
+  }
+}
+
+// ── UI HELPERS ──────────────────────────────────────────────────────────────
+function addMsg(text, role, isThinking = false) {
+  const container = document.getElementById('chat-messages');
+  const el        = document.createElement('div');
+  el.className    = `msg ${role}`;
+
+  if (role === 'bot') {
+    const content = isThinking
+      ? '<span class="dot-anim">Thinking…</span>'
+      : escapeHtml(text).replace(/\n/g, '<br>');
+    el.innerHTML = `<strong>MediAssist AI</strong>${content}`;
+  } else {
+    el.textContent = text;
+  }
+
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+  return el;
+}
+
+function addErrorMsg(text) {
+  const container = document.getElementById('chat-messages');
+  const el        = document.createElement('div');
+  el.className    = 'msg error';
+  el.innerHTML    = `<strong>⚠️ Connection Error</strong>${escapeHtml(text).replace(/\n/g, '<br>')}`;
+  container.appendChild(el);
+  container.scrollTop = container.scrollHeight;
+  return el;
+}
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g,  '&amp;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;')
+    .replace(/"/g,  '&quot;');
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function fillChat(text) {
+  const input = document.getElementById('chat-input');
+  input.value = text;
+  document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+  autoResize(input);
+  input.focus();
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+</script>
+<script>
+(function () {
+  var nav = document.querySelector('nav');
+  if (!nav) return;
+  function onScroll() {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
