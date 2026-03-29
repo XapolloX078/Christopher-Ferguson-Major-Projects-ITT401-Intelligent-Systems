@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Privacy Policy — MediAssist AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0A0F1E; --bg2: #111827; --surface: #1A2235; --ink: #F0EEF8;
+    --ink-muted: rgba(240,238,248,0.58); --teal: #00D4AA; --violet: #7C6FF7;
+    --white: #FFFFFF; --shadow: 0 8px 40px rgba(0,0,0,0.35); --radius: 20px;
+    --ease: cubic-bezier(0.4,0,0.2,1); --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08); --brand-grad: linear-gradient(135deg,#00D4AA,#7C6FF7);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;transition:all 0.3s var(--ease);}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(10,15,30,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;color:var(--ink);display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo .pulse{width:10px;height:10px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,170,0.45);}50%{box-shadow:0 0 0 10px rgba(0,212,170,0);}}
+  .nav-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:14px 22px;max-width:min(720px,58vw);}
+  .nav-links a{text-decoration:none;color:var(--ink-muted);font-size:0.82rem;font-weight:500;white-space:nowrap;}
+  .nav-links a:hover{color:var(--teal);}
+  .nav-links a.active{color:var(--teal);}
+  .nav-cta{position:relative;display:inline-block;padding:10px 26px;border-radius:999px;font-size:0.85rem;font-weight:600;text-decoration:none;color:var(--ink);background:linear-gradient(var(--bg2),var(--bg2)) padding-box,var(--brand-grad) border-box;border:2px solid transparent;}
+  .nav-cta:hover{color:var(--white);transform:translateY(-2px);box-shadow:0 0 24px rgba(0,212,170,0.15);}
+
+  .page-hero{min-height:44vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px 48px 80px;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:-20%;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 40%,rgba(0,212,170,0.14),transparent 55%),radial-gradient(ellipse 50% 40% at 80% 30%,rgba(124,111,247,0.12),transparent 50%);pointer-events:none;}
+  .page-hero::after{content:'';position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;mask-image:linear-gradient(to bottom,black 0%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,black 0%,transparent 100%);}
+  .page-hero>*{position:relative;z-index:1;}
+  .page-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);backdrop-filter:blur(8px);color:var(--teal);padding:8px 18px;border-radius:100px;font-size:0.8rem;font-weight:600;margin-bottom:24px;animation:fadeUp 0.6s ease both;}
+  .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.2rem);letter-spacing:-0.03em;line-height:1.08;margin-bottom:16px;animation:fadeUp 0.6s 0.1s ease both;}
+  .page-title em{font-style:normal;background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .page-meta{font-size:0.85rem;color:var(--ink-muted);animation:fadeUp 0.6s 0.2s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+  .content-wrap{max-width:880px;margin:0 auto;padding:80px 48px 100px;}
+  .toc{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:28px 32px;margin-bottom:64px;}
+  .toc h3{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+  .toc ol{padding-left:20px;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;}
+  .toc ol li{font-size:0.875rem;color:var(--ink-muted);}
+  .toc ol li a{color:var(--ink-muted);text-decoration:none;}
+  .toc ol li a:hover{color:var(--teal);}
+
+  .policy-section{margin-bottom:60px;}
+  .policy-section h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.55rem;letter-spacing:-0.02em;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .policy-section h2 .sec-num{font-size:0.75rem;font-weight:700;color:var(--teal);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);padding:4px 10px;border-radius:100px;letter-spacing:0.05em;font-family:'Inter',sans-serif;}
+  .policy-section p{color:var(--ink-muted);line-height:1.8;font-size:0.95rem;margin-bottom:14px;}
+  .policy-section ul{color:var(--ink-muted);line-height:1.8;font-size:0.95rem;padding-left:20px;margin-bottom:14px;}
+  .policy-section ul li{margin-bottom:6px;}
+  .policy-section h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:10px;margin-top:24px;color:var(--ink);}
+  .divider{height:1px;background:var(--glass-border);margin-bottom:60px;}
+
+  .highlight-box{background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.18);border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .highlight-box p{color:var(--ink);margin:0;font-size:0.9rem;}
+  .warn-box{background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .warn-box p{color:#FCA5A5;margin:0;font-size:0.875rem;line-height:1.7;}
+
+  footer{background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);color:var(--ink-muted);padding:60px 48px;}
+  .footer-inner{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:40px;align-items:stretch;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:var(--ink);text-align:center;}
+  .footer-link-row{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;}
+  .footer-link-row a{color:var(--ink-muted);text-decoration:none;font-size:0.875rem;font-weight:500;}
+  .footer-link-row a:hover{color:var(--teal);}
+  .footer-disclaimer-box{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.2);border-radius:12px;padding:16px 20px;font-size:0.875rem;line-height:1.65;color:var(--ink-muted);}
+  .footer-emergency-box{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:16px 20px;font-size:0.875rem;line-height:1.65;color:var(--ink-muted);}
+  .footer-box-label{display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin-bottom:8px;}
+  .footer-disclaimer-box .footer-box-label{color:#FCA5A5;}
+  .footer-emergency-box .footer-box-label{color:#FBBF24;}
+  .footer-meta{font-size:0.8rem;text-align:center;}
+  .footer-copyright{font-size:0.75rem;text-align:center;color:rgba(255,255,255,0.35);}
+
+  @media(max-width:900px){
+    nav{padding:16px 24px;} .nav-links{display:none;}
+    .page-hero{padding:120px 24px 60px;} .content-wrap{padding:60px 24px 80px;}
+    .toc ol{grid-template-columns:1fr;} footer{padding:60px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><div class="pulse"></div>MediAssist <span style="color:var(--teal)">AI</span></a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#demo">Try It</a>
+    <a href="index.html#ethics">Ethics</a>
+    <a href="index.html#how">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html" class="active">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact Support</a>
+  </div>
+  <a href="index.html#demo" class="nav-cta">Start Chat →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-badge">🔒 Your Privacy Matters</div>
+  <h1 class="page-title"><em>Privacy</em> Policy</h1>
+  <p class="page-meta">Last updated: January 15, 2026 &nbsp;·&nbsp; Effective: January 15, 2026</p>
+</div>
+
+<div class="content-wrap">
+
+  <div class="highlight-box">
+    <p>🟢 <strong>The short version:</strong> MediAssist AI runs entirely on your local machine. We do not collect, transmit, store, or sell any of your personal data or health information. Ever.</p>
+  </div>
+
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#s1">Information We Collect</a></li>
+      <li><a href="#s2">Local Processing</a></li>
+      <li><a href="#s3">No Data Transmission</a></li>
+      <li><a href="#s4">Cookies & Analytics</a></li>
+      <li><a href="#s5">Third-Party Services</a></li>
+      <li><a href="#s6">Data Security</a></li>
+      <li><a href="#s7">Children's Privacy</a></li>
+      <li><a href="#s8">Your Rights</a></li>
+      <li><a href="#s9">Changes to This Policy</a></li>
+      <li><a href="#s10">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <div class="policy-section" id="s1">
+    <h2><span class="sec-num">01</span> Information We Collect</h2>
+    <p>MediAssist AI is designed to operate without collecting personal information. Because the application runs locally on your machine via LM Studio and AnythingLLM, there is no backend server that receives your data.</p>
+    <h3>What We Do Not Collect</h3>
+    <ul>
+      <li>Your name, email address, or any contact information</li>
+      <li>Your health questions, symptoms, or medical history</li>
+      <li>Your IP address or device identifiers</li>
+      <li>Usage analytics, session duration, or behavioral data</li>
+      <li>Location data of any kind</li>
+    </ul>
+    <h3>Static Website Analytics (Optional)</h3>
+    <p>If you access the MediAssist AI landing page through a hosted web server, standard web server access logs may record your IP address and the pages you visit. These logs are used solely for diagnosing server issues and are not used for tracking or advertising purposes.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s2">
+    <h2><span class="sec-num">02</span> Local Processing</h2>
+    <p>All AI processing in MediAssist AI occurs on your local machine. When you type a question into the chat interface:</p>
+    <ul>
+      <li>Your query is sent to AnythingLLM running on <code style="background:var(--surface);padding:2px 6px;border-radius:4px;font-size:0.85rem">localhost:3001</code></li>
+      <li>AnythingLLM performs RAG retrieval from your local document store</li>
+      <li>The question and context are sent to LM Studio running on <code style="background:var(--surface);padding:2px 6px;border-radius:4px;font-size:0.85rem">localhost:1234</code></li>
+      <li>The response is returned to your browser — all within your local network</li>
+    </ul>
+    <p>No part of this pipeline involves external servers. Your conversation stays on your machine from start to finish.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s3">
+    <h2><span class="sec-num">03</span> No Data Transmission</h2>
+    <div class="highlight-box">
+      <p>🔒 MediAssist AI does not transmit your data to Anthropic, OpenAI, or any other AI provider. The language model runs locally.</p>
+    </div>
+    <p>Unlike cloud-based AI assistants, MediAssist AI does not send your health queries to third-party servers for processing. This means:</p>
+    <ul>
+      <li>Your medical questions cannot be used to train external AI models</li>
+      <li>Your data cannot be subpoenaed from a server we don't operate</li>
+      <li>There is no data breach risk from an external provider</li>
+      <li>Your conversations are as private as anything else on your local computer</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s4">
+    <h2><span class="sec-num">04</span> Cookies & Analytics</h2>
+    <p>The MediAssist AI interface, when served locally, does not use cookies or any client-side tracking technology. We do not use Google Analytics, Meta Pixel, or any similar analytics service in the core application.</p>
+    <p>If you deploy MediAssist AI as a hosted web application, you are responsible for ensuring your hosting configuration complies with applicable cookie and privacy laws.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s5">
+    <h2><span class="sec-num">05</span> Third-Party Services</h2>
+    <p>MediAssist AI uses the following open-source components, all of which run locally:</p>
+    <ul>
+      <li><strong>AnythingLLM</strong> — Open source, locally hosted. <a href="https://anythingllm.com" style="color:var(--teal)">anythingllm.com</a></li>
+      <li><strong>LM Studio</strong> — Desktop application, locally hosted. <a href="https://lmstudio.ai" style="color:var(--teal)">lmstudio.ai</a></li>
+      <li><strong>Docker</strong> — Containerization, locally hosted</li>
+    </ul>
+    <p>Please review the privacy policies of each of these tools separately. We are not responsible for their data practices, though note that all three are designed for local use.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s6">
+    <h2><span class="sec-num">06</span> Data Security</h2>
+    <p>Because data never leaves your machine, security is primarily in your hands. We recommend:</p>
+    <ul>
+      <li>Keeping your operating system and Docker updated</li>
+      <li>Not exposing your AnythingLLM port (3001) to the public internet</li>
+      <li>Using a strong, unique API key for AnythingLLM authentication</li>
+      <li>Encrypting your system drive if you want conversation history to be protected at rest</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s7">
+    <h2><span class="sec-num">07</span> Children's Privacy</h2>
+    <div class="warn-box">
+      <p>⚠️ MediAssist AI is not designed for use by children under the age of 13. If you are a parent or guardian and believe your child has used MediAssist AI, please note that no data is retained, so there is nothing to delete. However, we encourage you to supervise minors' use of AI health tools.</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s8">
+    <h2><span class="sec-num">08</span> Your Rights</h2>
+    <p>Because we collect no personal data, traditional data rights (access, erasure, portability) are automatically satisfied — there is nothing for us to provide, delete, or export on your behalf.</p>
+    <p>If you have conversation history stored locally by AnythingLLM, you can clear it at any time through the AnythingLLM interface or by deleting the relevant Docker volume.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s9">
+    <h2><span class="sec-num">09</span> Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. Continued use of MediAssist AI after any changes constitutes your acceptance of the updated policy.</p>
+    <p>We will never introduce data collection without prominent disclosure and, where required by law, your explicit consent.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="s10">
+    <h2><span class="sec-num">10</span> Contact Us</h2>
+    <p>If you have questions about this Privacy Policy or our privacy practices, please reach out through our <a href="contact.html" style="color:var(--teal)">Contact Support</a> page. We aim to respond to all inquiries within 48 hours.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MediAssist AI</div>
+    <ul class="footer-link-row">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#demo">Try It</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact Support</a></li>
+    </ul>
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:640px;margin:0 auto;width:100%">
+      <div class="footer-disclaimer-box"><strong class="footer-box-label">Disclaimer</strong><p>MediAssist AI provides general health information and is not a substitute for professional medical advice, diagnosis, or treatment.</p></div>
+      <div class="footer-emergency-box"><strong class="footer-box-label">Emergency</strong><p>If you believe you are experiencing a medical emergency, please contact emergency services immediately.</p></div>
+    </div>
+    <p class="footer-meta">Powered by AI | MediAssist AI v1.0</p>
+    <p class="footer-copyright">© 2026 MediAssist AI. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

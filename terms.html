@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms of Service — MediAssist AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0A0F1E; --bg2: #111827; --surface: #1A2235; --ink: #F0EEF8;
+    --ink-muted: rgba(240,238,248,0.58); --teal: #00D4AA; --violet: #7C6FF7;
+    --white: #FFFFFF; --shadow: 0 8px 40px rgba(0,0,0,0.35); --radius: 20px;
+    --ease: cubic-bezier(0.4,0,0.2,1); --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08); --brand-grad: linear-gradient(135deg,#00D4AA,#7C6FF7);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;transition:all 0.3s var(--ease);}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(10,15,30,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;color:var(--ink);display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo .pulse{width:10px;height:10px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,170,0.45);}50%{box-shadow:0 0 0 10px rgba(0,212,170,0);}}
+  .nav-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:14px 22px;max-width:min(720px,58vw);}
+  .nav-links a{text-decoration:none;color:var(--ink-muted);font-size:0.82rem;font-weight:500;white-space:nowrap;}
+  .nav-links a:hover{color:var(--teal);}
+  .nav-links a.active{color:var(--teal);}
+  .nav-cta{position:relative;display:inline-block;padding:10px 26px;border-radius:999px;font-size:0.85rem;font-weight:600;text-decoration:none;color:var(--ink);background:linear-gradient(var(--bg2),var(--bg2)) padding-box,var(--brand-grad) border-box;border:2px solid transparent;}
+  .nav-cta:hover{color:var(--white);transform:translateY(-2px);box-shadow:0 0 24px rgba(0,212,170,0.15);}
+
+  .page-hero{min-height:44vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px 48px 80px;text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:-20%;z-index:0;background:radial-gradient(ellipse 55% 45% at 75% 35%,rgba(124,111,247,0.16),transparent 55%),radial-gradient(ellipse 45% 40% at 25% 60%,rgba(0,212,170,0.12),transparent 50%);pointer-events:none;}
+  .page-hero::after{content:'';position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;mask-image:linear-gradient(to bottom,black 0%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,black 0%,transparent 100%);}
+  .page-hero>*{position:relative;z-index:1;}
+  .page-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);backdrop-filter:blur(8px);color:var(--teal);padding:8px 18px;border-radius:100px;font-size:0.8rem;font-weight:600;margin-bottom:24px;animation:fadeUp 0.6s ease both;}
+  .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.2rem);letter-spacing:-0.03em;line-height:1.08;margin-bottom:16px;animation:fadeUp 0.6s 0.1s ease both;}
+  .page-title em{font-style:normal;background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .page-meta{font-size:0.85rem;color:var(--ink-muted);animation:fadeUp 0.6s 0.2s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+  .content-wrap{max-width:880px;margin:0 auto;padding:80px 48px 100px;}
+
+  .toc{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:28px 32px;margin-bottom:64px;}
+  .toc h3{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--teal);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+  .toc ol{padding-left:20px;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;}
+  .toc ol li{font-size:0.875rem;color:var(--ink-muted);}
+  .toc ol li a{color:var(--ink-muted);text-decoration:none;}
+  .toc ol li a:hover{color:var(--teal);}
+
+  .policy-section{margin-bottom:60px;}
+  .policy-section h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.55rem;letter-spacing:-0.02em;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .policy-section h2 .sec-num{font-size:0.75rem;font-weight:700;color:var(--teal);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);padding:4px 10px;border-radius:100px;letter-spacing:0.05em;font-family:'Inter',sans-serif;}
+  .policy-section p{color:var(--ink-muted);line-height:1.8;font-size:0.95rem;margin-bottom:14px;}
+  .policy-section ul{color:var(--ink-muted);line-height:1.8;font-size:0.95rem;padding-left:20px;margin-bottom:14px;}
+  .policy-section ul li{margin-bottom:6px;}
+  .policy-section h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:10px;margin-top:24px;color:var(--ink);}
+  .divider{height:1px;background:var(--glass-border);margin-bottom:60px;}
+
+  .warn-box{background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .warn-box p{color:#FCA5A5;margin:0;font-size:0.9rem;line-height:1.7;}
+  .info-box{background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.18);border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .info-box p{color:var(--ink);margin:0;font-size:0.9rem;line-height:1.7;}
+  .amber-box{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22);border-radius:14px;padding:20px 24px;margin-bottom:24px;}
+  .amber-box p{color:#FCD34D;margin:0;font-size:0.9rem;line-height:1.7;}
+
+  footer{background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);color:var(--ink-muted);padding:60px 48px;}
+  .footer-inner{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:40px;align-items:stretch;}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:var(--ink);text-align:center;}
+  .footer-link-row{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;}
+  .footer-link-row a{color:var(--ink-muted);text-decoration:none;font-size:0.875rem;font-weight:500;}
+  .footer-link-row a:hover{color:var(--teal);}
+  .footer-disclaimer-box{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.2);border-radius:12px;padding:16px 20px;font-size:0.875rem;line-height:1.65;color:var(--ink-muted);}
+  .footer-emergency-box{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.28);border-radius:12px;padding:16px 20px;font-size:0.875rem;line-height:1.65;color:var(--ink-muted);}
+  .footer-box-label{display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin-bottom:8px;}
+  .footer-disclaimer-box .footer-box-label{color:#FCA5A5;}
+  .footer-emergency-box .footer-box-label{color:#FBBF24;}
+  .footer-meta{font-size:0.8rem;text-align:center;}
+  .footer-copyright{font-size:0.75rem;text-align:center;color:rgba(255,255,255,0.35);}
+
+  @media(max-width:900px){
+    nav{padding:16px 24px;} .nav-links{display:none;}
+    .page-hero{padding:120px 24px 60px;} .content-wrap{padding:60px 24px 80px;}
+    .toc ol{grid-template-columns:1fr;} footer{padding:60px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><div class="pulse"></div>MediAssist <span style="color:var(--teal)">AI</span></a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#demo">Try It</a>
+    <a href="index.html#ethics">Ethics</a>
+    <a href="index.html#how">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html" class="active">Terms</a>
+    <a href="contact.html">Contact Support</a>
+  </div>
+  <a href="index.html#demo" class="nav-cta">Start Chat →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-badge">📋 Legal Agreement</div>
+  <h1 class="page-title">Terms of <em>Service</em></h1>
+  <p class="page-meta">Last updated: January 15, 2026 &nbsp;·&nbsp; Effective: January 15, 2026</p>
+</div>
+
+<div class="content-wrap">
+
+  <div class="warn-box">
+    <p>⚠️ <strong>Important:</strong> MediAssist AI is not a licensed medical professional. Nothing in this application constitutes medical advice. Always consult a qualified healthcare provider for any health concerns.</p>
+  </div>
+
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#t1">Acceptance of Terms</a></li>
+      <li><a href="#t2">Description of Service</a></li>
+      <li><a href="#t3">Medical Disclaimer</a></li>
+      <li><a href="#t4">Permitted Use</a></li>
+      <li><a href="#t5">Prohibited Use</a></li>
+      <li><a href="#t6">Intellectual Property</a></li>
+      <li><a href="#t7">Limitation of Liability</a></li>
+      <li><a href="#t8">Indemnification</a></li>
+      <li><a href="#t9">Termination</a></li>
+      <li><a href="#t10">Governing Law</a></li>
+      <li><a href="#t11">Changes to Terms</a></li>
+      <li><a href="#t12">Contact</a></li>
+    </ol>
+  </div>
+
+  <div class="policy-section" id="t1">
+    <h2><span class="sec-num">01</span> Acceptance of Terms</h2>
+    <p>By accessing or using MediAssist AI ("the Service," "the Application," "we," "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.</p>
+    <p>These Terms apply to all users of MediAssist AI, including those who access the application locally or through any hosted deployment. Use of the Service constitutes full acceptance of these Terms.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t2">
+    <h2><span class="sec-num">02</span> Description of Service</h2>
+    <p>MediAssist AI is a locally hosted AI-powered information assistant designed to provide general health and medical information. The Service operates via AnythingLLM and LM Studio, running entirely on the user's local machine.</p>
+    <p>The Service provides:</p>
+    <ul>
+      <li>General health information based on curated medical literature</li>
+      <li>Symptom descriptions and explanations of common conditions</li>
+      <li>Information about medications, dosages, and general interactions</li>
+      <li>Guidance on when to seek professional medical care</li>
+    </ul>
+    <p>The Service does not provide diagnosis, treatment recommendations, prescriptions, or any form of licensed medical advice.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t3">
+    <h2><span class="sec-num">03</span> Medical Disclaimer</h2>
+    <div class="warn-box">
+      <p>⚠️ <strong>MediAssist AI is not a substitute for professional medical advice, diagnosis, or treatment.</strong> The information provided is for general educational purposes only.</p>
+    </div>
+    <p>Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you read or heard from MediAssist AI.</p>
+    <p>If you think you may have a medical emergency, immediately call your doctor, emergency services, or go to the nearest emergency room. MediAssist AI does not recommend or endorse any specific tests, physicians, products, procedures, opinions, or other information.</p>
+    <h3>Specific Limitations</h3>
+    <ul>
+      <li>MediAssist AI cannot examine you or access your medical records</li>
+      <li>AI-generated health information may be incomplete, outdated, or inapplicable to your situation</li>
+      <li>The Service cannot account for your personal medical history, allergies, or current medications</li>
+      <li>The Service may occasionally produce inaccurate information — always verify with a professional</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t4">
+    <h2><span class="sec-num">04</span> Permitted Use</h2>
+    <div class="info-box">
+      <p>✅ MediAssist AI is intended for personal, non-commercial use as a general health information resource.</p>
+    </div>
+    <p>You may use the Service to:</p>
+    <ul>
+      <li>Ask general questions about health, symptoms, and conditions</li>
+      <li>Learn about medications and their general uses</li>
+      <li>Get guidance on whether to seek medical care</li>
+      <li>Understand medical terminology and concepts</li>
+      <li>Deploy locally for personal or approved organizational use</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t5">
+    <h2><span class="sec-num">05</span> Prohibited Use</h2>
+    <p>You agree not to use MediAssist AI to:</p>
+    <ul>
+      <li>Replace professional medical diagnosis, treatment, or emergency response</li>
+      <li>Make decisions about medications, surgeries, or other medical interventions without professional guidance</li>
+      <li>Provide medical advice to third parties using the Service as your authority</li>
+      <li>Use the Service in any clinical or healthcare professional capacity without appropriate professional oversight</li>
+      <li>Attempt to override or manipulate the built-in safety systems and disclaimers</li>
+      <li>Use the Service in any way that violates applicable law or regulation</li>
+      <li>Redistribute or commercialize the Service without prior written consent</li>
+    </ul>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t6">
+    <h2><span class="sec-num">06</span> Intellectual Property</h2>
+    <p>The MediAssist AI interface, design, documentation, and associated materials are the intellectual property of MediAssist AI and its contributors. The underlying models (LM Studio, AnythingLLM) are subject to their respective open-source licenses.</p>
+    <p>The medical knowledge base documents used for RAG retrieval are sourced from publicly available, peer-reviewed medical literature and are used in accordance with applicable fair use and open access provisions.</p>
+    <p>You may not reproduce, distribute, or create derivative works of the MediAssist AI interface without prior written permission.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t7">
+    <h2><span class="sec-num">07</span> Limitation of Liability</h2>
+    <div class="amber-box">
+      <p>⚡ To the maximum extent permitted by applicable law, MediAssist AI and its developers shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service.</p>
+    </div>
+    <p>This includes, without limitation, damages for:</p>
+    <ul>
+      <li>Personal injury or health outcomes based on information from the Service</li>
+      <li>Loss of data, profits, or business opportunities</li>
+      <li>Inaccurate, incomplete, or outdated health information</li>
+      <li>Any decisions made in reliance on information from the Service</li>
+    </ul>
+    <p>The Service is provided "as is" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t8">
+    <h2><span class="sec-num">08</span> Indemnification</h2>
+    <p>You agree to indemnify, defend, and hold harmless MediAssist AI and its developers, contributors, and affiliates from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys' fees) arising out of or in any way connected with your access to or use of the Service, or your violation of these Terms.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t9">
+    <h2><span class="sec-num">09</span> Termination</h2>
+    <p>Because MediAssist AI runs locally, you may cease use at any time by stopping the application. We reserve the right to discontinue or modify the Service at any time without notice.</p>
+    <p>These Terms survive termination with respect to any provisions that by their nature should survive, including intellectual property rights, disclaimer of warranties, indemnification, and limitation of liability.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t10">
+    <h2><span class="sec-num">10</span> Governing Law</h2>
+    <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which MediAssist AI is operated, without regard to its conflict of law provisions.</p>
+    <p>Any disputes arising under these Terms shall be resolved through good-faith negotiation before any formal legal proceedings.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t11">
+    <h2><span class="sec-num">11</span> Changes to Terms</h2>
+    <p>We reserve the right to update these Terms at any time. Changes will be reflected by updating the "Last updated" date at the top of this page. Your continued use of the Service after any changes constitutes your acceptance of the revised Terms.</p>
+    <p>For material changes, we will make reasonable efforts to notify users through the application interface.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="policy-section" id="t12">
+    <h2><span class="sec-num">12</span> Contact</h2>
+    <p>If you have questions about these Terms of Service, please contact us through our <a href="contact.html" style="color:var(--teal)">Contact Support</a> page. We aim to respond to all legal inquiries within 5 business days.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MediAssist AI</div>
+    <ul class="footer-link-row">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#demo">Try It</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact Support</a></li>
+    </ul>
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:640px;margin:0 auto;width:100%">
+      <div class="footer-disclaimer-box"><strong class="footer-box-label">Disclaimer</strong><p>MediAssist AI provides general health information and is not a substitute for professional medical advice, diagnosis, or treatment.</p></div>
+      <div class="footer-emergency-box"><strong class="footer-box-label">Emergency</strong><p>If you believe you are experiencing a medical emergency, please contact emergency services immediately.</p></div>
+    </div>
+    <p class="footer-meta">Powered by AI | MediAssist AI v1.0</p>
+    <p class="footer-copyright">© 2026 MediAssist AI. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

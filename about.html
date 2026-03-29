@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us — MediAssist AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0A0F1E;
+    --bg2: #111827;
+    --surface: #1A2235;
+    --ink: #F0EEF8;
+    --ink-muted: rgba(240, 238, 248, 0.58);
+    --red: #F87171;
+    --red-soft: rgba(248, 113, 113, 0.14);
+    --teal: #00D4AA;
+    --violet: #7C6FF7;
+    --teal-soft: rgba(0, 212, 170, 0.12);
+    --gold: #C4B5FD;
+    --white: #FFFFFF;
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+    --radius: 20px;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --brand-grad: linear-gradient(135deg, #00D4AA, #7C6FF7);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s var(--ease); }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.03em; color: var(--ink); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,212,170,0.45);}50%{box-shadow:0 0 0 10px rgba(0,212,170,0);} }
+  .nav-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 14px 22px; max-width: min(720px,58vw); }
+  .nav-links a { text-decoration: none; color: var(--ink-muted); font-size: 0.82rem; font-weight: 500; white-space: nowrap; }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a.active { color: var(--teal); }
+  .nav-cta {
+    position: relative; display: inline-block; padding: 10px 26px; border-radius: 999px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none; color: var(--ink);
+    background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--brand-grad) border-box;
+    border: 2px solid transparent; overflow: hidden;
+  }
+  .nav-cta:hover { color: var(--white); transform: translateY(-2px); box-shadow: 0 0 24px rgba(0,212,170,0.15); }
+
+  .page-hero {
+    min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 140px 48px 80px; text-align: center; position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: -20%; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,212,170,0.18), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 80% 30%, rgba(124,111,247,0.16), transparent 50%);
+    animation: heroMesh 22s ease-in-out infinite alternate; pointer-events: none;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px; pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  }
+  @keyframes heroMesh { 0%{opacity:.75;transform:scale(1) translate(0,0);}100%{opacity:1;transform:scale(1.06) translate(2%,-1.5%);} }
+  .page-hero > * { position: relative; z-index: 1; }
+  .page-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25);
+    backdrop-filter: blur(8px); color: var(--teal);
+    padding: 8px 18px; border-radius: 100px; font-size: 0.8rem; font-weight: 600;
+    margin-bottom: 24px; animation: fadeUp 0.6s ease both;
+  }
+  .page-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 5vw, 4.5rem); letter-spacing: -0.03em; line-height: 1.08;
+    margin-bottom: 20px; animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .page-title em { font-style: normal; background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-subtitle { font-size: 1.1rem; color: var(--ink-muted); line-height: 1.7; max-width: 600px; margin: 0 auto; animation: fadeUp 0.6s 0.2s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;} }
+
+  .section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 3vw, 2.8rem); letter-spacing: -0.03em; margin-bottom: 16px; }
+  .section-desc { color: var(--ink-muted); max-width: 620px; font-size: 1rem; line-height: 1.7; }
+
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 60px; }
+  .mission-text p { color: var(--ink-muted); line-height: 1.8; font-size: 1rem; margin-bottom: 20px; }
+  .mission-visual {
+    background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow);
+  }
+  .mission-visual:hover { border-color: rgba(0,212,170,0.35); transform: translateY(-6px); box-shadow: 0 0 24px rgba(0,212,170,0.1), var(--shadow); }
+  .stat-block { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .stat-item { text-align: center; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); }
+  .stat-item:hover { border-color: rgba(0,212,170,0.3); background: rgba(0,212,170,0.05); }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.03em; background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 0.78rem; color: var(--ink-muted); margin-top: 4px; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .team-card {
+    background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 32px; text-align: center;
+  }
+  .team-card:hover { transform: translateY(-6px); border-color: rgba(0,212,170,0.4); box-shadow: 0 0 24px rgba(0,212,170,0.1); }
+  .team-avatar { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+  .team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, rgba(0,212,170,0.35), rgba(124,111,247,0.2)); }
+  .team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, rgba(124,111,247,0.35), rgba(0,212,170,0.15)); }
+  .team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, rgba(0,212,170,0.25), rgba(196,181,253,0.25)); }
+  .team-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+  .team-card .role { font-size: 0.78rem; color: var(--teal); font-weight: 600; margin-bottom: 12px; }
+  .team-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .value-card {
+    background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 28px;
+  }
+  .value-card:hover { transform: translateY(-6px); border-color: rgba(0,212,170,0.4); box-shadow: 0 0 24px rgba(0,212,170,0.1); }
+  .value-icon { font-size: 1.8rem; margin-bottom: 16px; }
+  .value-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+  .value-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+  .dark-section { background: linear-gradient(180deg, #070B14 0%, #0A0F1E 100%); }
+  .dark-section .section { max-width: 1200px; margin: 0 auto; }
+
+  footer { background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); color: var(--ink-muted); padding: 60px 48px; }
+  .footer-inner { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: stretch; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--ink); text-align: center; }
+  .footer-link-row { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }
+  .footer-link-row a { color: var(--ink-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+  .footer-link-row a:hover { color: var(--teal); }
+  .footer-disclaimer-box { background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.2); border-radius: 12px; padding: 16px 20px; font-size: 0.875rem; line-height: 1.65; color: var(--ink-muted); }
+  .footer-emergency-box { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.28); border-radius: 12px; padding: 16px 20px; font-size: 0.875rem; line-height: 1.65; color: var(--ink-muted); }
+  .footer-box-label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); margin-bottom: 8px; }
+  .footer-disclaimer-box .footer-box-label { color: #FCA5A5; }
+  .footer-emergency-box .footer-box-label { color: #FBBF24; }
+  .footer-meta { font-size: 0.8rem; text-align: center; }
+  .footer-copyright { font-size: 0.75rem; text-align: center; color: rgba(255,255,255,0.35); }
+
+  @media(max-width:900px){
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .page-hero { padding: 120px 24px 60px; }
+    .section { padding: 70px 24px; }
+    .mission-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
+    footer { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><div class="pulse"></div>MediAssist <span style="color:var(--teal)">AI</span></a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#demo">Try It</a>
+    <a href="index.html#ethics">Ethics</a>
+    <a href="index.html#how">How It Works</a>
+    <a href="about.html" class="active">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact Support</a>
+  </div>
+  <a href="index.html#demo" class="nav-cta">Start Chat →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-badge">🏥 Our Story</div>
+  <h1 class="page-title">About <em>MediAssist AI</em></h1>
+  <p class="page-subtitle">We're building the future of accessible health information — responsibly, privately, and with humanity at the center of every decision.</p>
+</div>
+
+
+<div style="background:var(--bg2)">
+<div class="section">
+  <div class="section-label">Our Mission</div>
+  <div class="mission-grid">
+    <div class="mission-text">
+      <h2 class="section-title">Making Medical Knowledge <em style="font-style:normal;background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">Accessible to All</em></h2>
+      <p>MediAssist AI was born from a simple observation: millions of people turn to the internet for health answers every day, yet they're met with unreliable sources, confusing jargon, and information that may not apply to their situation.</p>
+      <p>We set out to build something different — a domain-specific medical AI that delivers accurate, contextually grounded health information using retrieval-augmented generation (RAG), while being radically transparent about its limitations.</p>
+      <p>Our system runs entirely locally on your machine. No servers. No data collection. No compromise on your privacy. Just honest, helpful health information when you need it.</p>
+    </div>
+    <div class="mission-visual">
+      <div class="stat-block">
+        <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Medical Topics Covered</div></div>
+        <div class="stat-item"><div class="stat-num">RAG</div><div class="stat-label">Document Retrieval</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Local & Private</div></div>
+        <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Data Transmitted</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="dark-section">
+<div class="section">
+  <div class="section-label">What We Stand For</div>
+  <h2 class="section-title">Our Core Values</h2>
+  <p class="section-desc">Every design decision in MediAssist AI flows from these principles.</p>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🔒</div>
+      <h3>Privacy First</h3>
+      <p>Your health conversations are deeply personal. We designed MediAssist AI to run entirely on-device — no conversation ever leaves your machine.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🎯</div>
+      <h3>Radical Honesty</h3>
+      <p>We are transparent about what AI can and cannot do in healthcare. We actively encourage users to consult real medical professionals.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">⚖️</div>
+      <h3>Equity in Health</h3>
+      <p>We curate training data from diverse sources to minimize bias and ensure our assistant serves all users fairly, regardless of background.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">📋</div>
+      <h3>Source Transparency</h3>
+      <p>Every response cites its source documents. You always know where the information came from and can evaluate it yourself.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🚨</div>
+      <h3>Safety as Default</h3>
+      <p>When in doubt, we err on the side of caution — always directing users toward professional care for anything that could be serious.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔬</div>
+      <h3>Evidence-Based</h3>
+      <p>Our knowledge base is built exclusively on peer-reviewed literature, clinical guidelines, and reputable medical reference documents.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div style="background:var(--bg2)">
+<div class="section">
+  <div class="section-label">The People Behind It</div>
+  <h2 class="section-title">Meet the Team</h2>
+  <p class="section-desc">A multidisciplinary group of engineers, clinicians, and ethicists united by a shared mission.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">👩‍⚕️</div>
+      <h3>Dr. Sarah Ellison</h3>
+      <div class="role">Medical Advisor & Co-Founder</div>
+      <p>Board-certified internist with 12 years of clinical experience. Leads our knowledge base curation and clinical accuracy review processes.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👨‍💻</div>
+      <h3>Marcus Chen</h3>
+      <div class="role">Lead AI Engineer</div>
+      <p>Specialist in RAG architectures and local LLM deployment. Designed the AnythingLLM + LM Studio pipeline that powers MediAssist AI.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👩‍🔬</div>
+      <h3>Priya Nair</h3>
+      <div class="role">AI Ethics Lead</div>
+      <p>Healthcare AI ethicist focused on bias mitigation, responsible disclosure, and ensuring our system respects patient dignity and autonomy.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="dark-section">
+<div class="section">
+  <div class="section-label">Under the Hood</div>
+  <h2 class="section-title">The Technology</h2>
+  <p class="section-desc">MediAssist AI is built on a carefully chosen stack designed for accuracy, privacy, and reliability.</p>
+  <div class="values-grid" style="margin-top:60px">
+    <div class="value-card">
+      <div class="value-icon">🧠</div>
+      <h3>LM Studio</h3>
+      <p>Runs Mistral-7B or Llama-3.1 locally on your hardware. All model inference happens on-device with zero external API calls.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">📚</div>
+      <h3>AnythingLLM + RAG</h3>
+      <p>Retrieval-augmented generation pulls precise, cited answers from our curated medical document knowledge base — reducing hallucination.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🐳</div>
+      <h3>Docker Containerized</h3>
+      <p>The entire stack ships as a Docker setup for reproducible, platform-independent deployment on Windows, macOS, and Linux.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">MediAssist AI</div>
+    <ul class="footer-link-row">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#demo">Try It</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact Support</a></li>
+    </ul>
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:640px;margin:0 auto;width:100%">
+      <div class="footer-disclaimer-box"><strong class="footer-box-label">Disclaimer</strong><p>MediAssist AI provides general health information and is not a substitute for professional medical advice, diagnosis, or treatment.</p></div>
+      <div class="footer-emergency-box"><strong class="footer-box-label">Emergency</strong><p>If you believe you are experiencing a medical emergency, please contact emergency services immediately.</p></div>
+    </div>
+    <p class="footer-meta">Powered by AI | MediAssist AI v1.0</p>
+    <p class="footer-copyright">© 2026 MediAssist AI. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
