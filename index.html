@@ -41,7 +41,6 @@
     overflow-x: hidden;
   }
 
-  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
     z-index: 100;
@@ -117,7 +116,6 @@
   }
   .nav-cta:hover::after { transform: translateX(120%); }
 
-  /* HERO */
   .hero {
     min-height: 100vh;
     display: grid; grid-template-columns: 1fr 1fr;
@@ -266,7 +264,6 @@
   }
   .stat-label { font-size: 0.8rem; color: var(--ink-muted); margin-top: 2px; }
 
-  /* HERO VISUAL */
   .hero-visual {
     animation: fadeIn 0.8s 0.2s ease both;
     position: relative;
@@ -360,7 +357,6 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  /* FEATURES */
   .section { padding: 100px 48px; }
   .section-label {
     font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
@@ -413,7 +409,6 @@
   .feature-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; color: var(--ink); }
   .feature-card p { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.6; }
 
-  /* HOW IT WORKS */
   .how-section {
     background: linear-gradient(180deg, #070B14 0%, #0A0F1E 100%);
     color: var(--white);
@@ -453,7 +448,6 @@
   .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
   .step p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
 
-  /* CHAT DEMO */
   .demo-section { background: var(--bg2); }
   .demo-container {
     display: grid; grid-template-columns: 1fr 1.2fr;
@@ -485,7 +479,6 @@
     box-shadow: 0 0 20px rgba(0, 212, 170, 0.12);
   }
 
-  /* MAIN CHAT INTERFACE */
   .chat-interface {
     background: var(--glass);
     backdrop-filter: blur(12px);
@@ -600,7 +593,6 @@
   }
   #send-btn:disabled::after { display: none; }
 
-  /* CONNECTION STATUS BANNER */
   .conn-banner {
     display: none;
     align-items: center; gap: 10px;
@@ -617,7 +609,6 @@
     border-bottom-color: rgba(248, 113, 113, 0.25);
   }
 
-  /* CONFIG PANEL — hidden on the live site; inputs stay in DOM for getConfig() */
   .config-panel {
     display: none;
     background: var(--glass);
@@ -647,7 +638,6 @@
     text-decoration: underline; margin-bottom: 12px; display: inline-block;
   }
 
-  /* ETHICS */
   .ethics-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
     gap: 20px; margin-top: 60px;
@@ -676,7 +666,6 @@
   .ethics-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--ink); }
   .ethics-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
 
-  /* FOOTER */
   footer {
     background: rgba(255, 255, 255, 0.03);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -791,7 +780,6 @@
     color: rgba(255, 255, 255, 0.35);
   }
 
-  /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
@@ -804,7 +792,6 @@
     .nav-links { max-width: none; justify-content: center; }
   }
 
-  /* ANIMATIONS */
   .dot-anim { font-style: italic; opacity: 0.7; color: var(--teal); }
 </style>
 </head>
@@ -820,10 +807,10 @@
     <a href="#demo">Try It</a>
     <a href="#ethics">Ethics</a>
     <a href="#how">How It Works</a>
-    <a href="#">About</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms</a>
-    <a href="#">Contact Support</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact Support</a>
   </div>
   <a href="#demo" class="nav-cta">Start Chat →</a>
 </nav>
@@ -936,8 +923,6 @@
   <p class="section-desc">Powered by local AI. This connects to your local AnythingLLM + LM Studio instance running on your machine.</p>
   <div class="demo-container">
     <div class="demo-info">
-
-      <!-- ── CONFIGURATION PANEL ── -->
       <div class="config-panel">
         <h4>⚙️ Connection Settings</h4>
         <span class="config-toggle" id="config-toggle" onclick="toggleConfig()">▼ Show / Edit Settings</span>
@@ -985,7 +970,6 @@
         <strong>MediAssist AI</strong>
         <span id="conn-status-text">General Medical Q&amp;A</span>
       </div>
-      <!-- Connection warning banner -->
       <div class="conn-banner" id="conn-banner">
         <span id="conn-banner-msg"></span>
       </div>
@@ -1073,11 +1057,6 @@
 </footer>
 
 <script>
-// ── CONFIGURATION ──────────────────────────────────────────────────────────
-// Default values — can be changed live via the Settings panel in the UI.
-// To run this file without CORS errors, serve it with:
-//   python -m http.server 8080   (then open http://localhost:8080)
-// ───────────────────────────────────────────────────────────────────────────
 function getConfig() {
   return {
     url:   (document.getElementById('cfg-url')  || {}).value  || 'http://localhost:3001',
@@ -1085,8 +1064,6 @@ function getConfig() {
     key:   (document.getElementById('cfg-key')  || {}).value  || ''
   };
 }
-
-// Toggle the config panel
 function toggleConfig() {
   const fields  = document.getElementById('config-fields');
   const toggle  = document.getElementById('config-toggle');
@@ -1094,10 +1071,7 @@ function toggleConfig() {
   fields.style.display  = visible ? 'none' : 'block';
   toggle.textContent    = visible ? '▼ Show / Edit Settings' : '▲ Hide Settings';
 }
-
-// ── CONNECTION STATUS ───────────────────────────────────────────────────────
 function setStatus(state) {
-  // state: 'ok' | 'error' | 'connecting'
   const dot    = document.getElementById('status-dot');
   const text   = document.getElementById('conn-status-text');
   const banner = document.getElementById('conn-banner');
@@ -1106,7 +1080,7 @@ function setStatus(state) {
   if (state === 'ok') {
     dot.style.background = '#4ECB71';
     text.textContent     = 'Connected · General Medical Q&A';
-    banner.className     = 'conn-banner';                 // hidden
+    banner.className     = 'conn-banner';
   } else if (state === 'connecting') {
     dot.style.background = '#F0A500';
     text.textContent     = 'Connecting…';
@@ -1119,8 +1093,6 @@ function setStatus(state) {
     banMsg.textContent   = '⚠️ Cannot reach AnythingLLM. Check Docker & LM Studio, then update the Server URL above if needed.';
   }
 }
-
-// ── CHAT LOGIC ──────────────────────────────────────────────────────────────
 const messagesHistory = [];
 
 async function sendMessage() {
@@ -1128,21 +1100,15 @@ async function sendMessage() {
   const sendBtn = document.getElementById('send-btn');
   const text    = input.value.trim();
   if (!text) return;
-
-  // 1. Show user message
   addMsg(text, 'user');
   input.value = '';
   autoResize(input);
   sendBtn.disabled = true;
   messagesHistory.push({ role: 'user', content: text });
-
-  // 2. Thinking indicator
   const thinkingEl = addMsg('', 'bot', true);
   setStatus('connecting');
 
   const { url, slug, key } = getConfig();
-
-  // 3. Validate config before calling
   if (!key) {
     thinkingEl.remove();
     addErrorMsg('No API key set. Edit the API key in this HTML file (input id="cfg-key") or show the panel again by removing display:none from .config-panel.');
@@ -1152,7 +1118,6 @@ async function sendMessage() {
   }
 
   try {
-    // 4. API call to AnythingLLM
     const response = await fetch(`${url}/api/v1/workspace/${encodeURIComponent(slug)}/chat`, {
       method: 'POST',
       headers: {
@@ -1161,8 +1126,6 @@ async function sendMessage() {
       },
       body: JSON.stringify({ message: text, mode: 'chat' })
     });
-
-    // 5. Handle HTTP errors
     if (response.status === 403) {
       throw new Error('403 — Invalid API key. Check your key in the Settings panel.');
     }
@@ -1184,8 +1147,6 @@ async function sendMessage() {
   } catch (e) {
     console.error('MediAssist connection error:', e);
     thinkingEl.remove();
-
-    // Friendly, actionable error messages
     let hint = e.message || '';
     if (hint.includes('Failed to fetch') || hint.includes('NetworkError') || hint.includes('net::')) {
       hint = `Cannot reach AnythingLLM at ${url}. Please check:\n• Docker Desktop is running\n• The AnythingLLM container is up (port 3001)\n• LM Studio local server is active (port 1234)\n• You are serving this file via http:// (not file://)\n\nIf the URL is different, update it in ⚙️ Connection Settings above.`;
@@ -1196,8 +1157,6 @@ async function sendMessage() {
     sendBtn.disabled = false;
   }
 }
-
-// ── UI HELPERS ──────────────────────────────────────────────────────────────
 function addMsg(text, role, isThinking = false) {
   const container = document.getElementById('chat-messages');
   const el        = document.createElement('div');
@@ -1268,3 +1227,4 @@ function autoResize(el) {
 </script>
 </body>
 </html>
+
